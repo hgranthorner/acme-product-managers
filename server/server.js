@@ -7,3 +7,4 @@ syncAndSeed()
   .then(() =>
     app.listen(port, () => console.log(`Listening on port ${port}...`))
   )
+  .catch(e => console.log(e))
