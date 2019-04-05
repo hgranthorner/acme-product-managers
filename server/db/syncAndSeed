@@ -1,0 +1,27 @@
+const { User, Product } = require('./models')
+const cnxn = require('./cnxn')
+
+User.hasMany(Product, { foreignKey: 'managerId' })
+Product.belongsTo(User, { as: 'manager', foreignKey: 'managerId' })
+
+module.exports = () => {
+
+  return cnxn.sync({force: true})
+    .then(() => {
+      return Promise.all([
+        User.create({name: 'Moe'}),
+        User.create({name: 'Larry'}),
+        User.create({name: 'Curly'}),
+        User.create({name: 'Shep '})
+      ])
+    })
+    .then(() => {
+      return Promise.all([
+        Product.create({name: 'foo'}),
+        Product.create({name: 'bar'}),
+        Product.create({name: 'bazz'}),
+        Product.create({name: 'quq'})
+      ])
+    })
+    .catch( e => console.log(`Failed to sync and seed. Here's why:\n${e}`))
+}
