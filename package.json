@@ -1,0 +1,33 @@
+{
+  "name": "acme-product-managers",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-watch": "webpack -w",
+    "start-server": "DATABASE_URL=postgresql://localhost/acme-product-managers-db nodemon server/server.js --ignore client",
+    "start:dev" : "npm run build-watch & npm run start-server"
+  },
+  "keywords": [],
+  "author": "Grant Horner",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "pg": "^7.9.0",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^6.0.1",
+    "react-router-dom": "^5.0.0",
+    "redux": "^4.0.1",
+    "sequelize": "^5.2.12",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  }
+}
