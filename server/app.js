@@ -19,9 +19,13 @@ app.get('/api/products', (req, res, next) => {
 })
 
 app.put('/api/products/:id', (req, res, next) => {
-  const { id, managerId } = req.params
-  Product.update({ managerId}, { where: { id } })
-    .then(products => res.send(products))
+  const id = req.params.id
+  const managerId = req.body.managerId
+  Product.update({ managerId }, { where: { id } })
+    .then(products => {
+      console.log('successfully updated')
+      res.send(products)
+    })
     .catch(next)
 })
 

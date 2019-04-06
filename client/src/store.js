@@ -10,18 +10,30 @@ const initialState = {
 // Action types
 const GET_USERS = Symbol('f')
 const GET_PRODUCTS = Symbol('f')
+const UPDATE_PRODUCT = Symbol('f')
 
 // Action creators
 const getUsersActionCreator = users => ({ type: GET_USERS, users })
 const getProductsActionCreator = products => ({ type: GET_PRODUCTS, products })
+const updateProductActionCreator = (productId, managerId) => ({ type: UPDATE_PRODUCT, productId, managerId })
 
 // Reducer
-const reducer = (state = initialState, { type, users, products }) => {
+const reducer = (state = initialState, { type, users, products, productId, managerId }) => {
   switch (type) {
     case GET_USERS:
       return { ...state, users }
     case GET_PRODUCTS:
       return { ...state, products }
+    case UPDATE_PRODUCT:
+      const newProducts = [...state.products].map(p => {
+        if (p.id === productId) {
+          p.managerId = managerId
+        }
+
+        return p
+      })
+
+      return { ...state, products: newProducts }
     default:
       return state
   }
@@ -30,16 +42,27 @@ const reducer = (state = initialState, { type, users, products }) => {
 const store = createStore(reducer, applyMiddleware(thunk))
 
 // Thunks
-const fetchUsers = dispatch => {
-  return axios.get('/api/users')
-    .then(res => res.data)
-    .then(users => dispatch(getUsersActionCreator(users)))
+const fetchUsers = () => {
+  return dispatch => {
+    axios.get('/api/users')
+      .then(res => res.data)
+      .then(users => dispatch(getUsersActionCreator(users)))
+  }
 }
 
-const fetchProducts = dispatch => {
-  return axios.get('/api/products')
-    .then(res => res.data)
-    .then(products => dispatch(getProductsActionCreator(products)))
+const fetchProducts = () => {
+  return dispatch => {
+    axios.get('/api/products')
+      .then(res => res.data)
+      .then(products => dispatch(getProductsActionCreator(products)))
+  }
+}
+
+const updateProduct = (productId, managerId) => {
+  return dispatch => {
+    axios.put(`/api/products/${productId}`, {managerId})
+      .then(() => dispatch(updateProductActionCreator(productId, managerId)))
+  }
 }
 
 // Helper functions
@@ -49,4 +72,4 @@ const getManagers = (users, products) => {
 }
 
 export default store
-export { fetchUsers, fetchProducts, getManagers }
+export { fetchUsers, fetchProducts, getManagers, updateProduct }

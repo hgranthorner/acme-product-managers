@@ -9,7 +9,7 @@ function mapStateToProps() {
 }
 
 function mapDispatchToProps(dispatch) {
-  return { fetchUsers: () => dispatch(fetchUsers), fetchProducts: () => dispatch(fetchProducts)}
+  return { fetchUsers: () => dispatch(fetchUsers()), fetchProducts: () => dispatch(fetchProducts())}
 }
 
 const App = ({ fetchUsers, fetchProducts }) => {
