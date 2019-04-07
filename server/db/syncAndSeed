@@ -1,8 +1,8 @@
 const { User, Product } = require('./models')
 const cnxn = require('./cnxn')
 
-User.hasMany(Product, { foreignKey: 'managerId', constraints: false })
-Product.belongsTo(User, { as: 'manager', foreignKey: 'managerId', constraints: false })
+User.hasMany(Product, { foreignKey: 'managerId' })
+Product.belongsTo(User, { as: 'manager', foreignKey: 'managerId' })
 
 module.exports = () => {
 

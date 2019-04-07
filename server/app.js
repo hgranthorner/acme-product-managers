@@ -20,12 +20,16 @@ app.get('/api/products', (req, res, next) => {
 
 app.put('/api/products/:id', (req, res, next) => {
   const id = req.params.id
-  const managerId = req.body.managerId
+  const managerId = Number(req.body.managerId) || null
   console.log(id, managerId)
-  Product.update({ managerId }, { where: { id } })
-    .then(products => {
-      console.log('successfully updated')
-      res.send(products)
+  Product.findByPk(id)
+    .then( product => {
+      product.managerId = managerId
+      return product.save()
+    })
+    .then(product => {
+      console.log('successfully updated\n', product.dataValues)
+      res.sendStatus(204)
     })
     .catch(next)
 })
