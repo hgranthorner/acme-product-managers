@@ -2,7 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 
 function mapStateToProps({ products }) {
-  return { haveOpenings: products.filter(p => !p.managerId).length > 0 }
+  console.log(products)
+  const productsWithoutManagers = products.filter(p => !p.managerId)
+  return { haveOpenings: productsWithoutManagers.length > 0 }
 }
 
 const Home = ({ haveOpenings }) => {

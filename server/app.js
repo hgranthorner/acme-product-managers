@@ -21,6 +21,7 @@ app.get('/api/products', (req, res, next) => {
 app.put('/api/products/:id', (req, res, next) => {
   const id = req.params.id
   const managerId = req.body.managerId
+  console.log(id, managerId)
   Product.update({ managerId }, { where: { id } })
     .then(products => {
       console.log('successfully updated')

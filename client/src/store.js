@@ -27,7 +27,7 @@ const reducer = (state = initialState, { type, users, products, productId, manag
     case UPDATE_PRODUCT:
       const newProducts = [...state.products].map(p => {
         if (p.id === productId) {
-          p.managerId = managerId
+          p.managerId = Number(managerId)
         }
 
         return p
@@ -61,13 +61,14 @@ const fetchProducts = () => {
 const updateProduct = (productId, managerId) => {
   return dispatch => {
     axios.put(`/api/products/${productId}`, {managerId})
+      .then(() => console.log(managerId))
       .then(() => dispatch(updateProductActionCreator(productId, managerId)))
   }
 }
 
 // Helper functions
 const getManagers = (users, products) => {
-  const productsWithManagers = products.filter(p => p.managerId)
+  const productsWithManagers = products.filter(p => p.managerId).map(p => Number(p.managerId))
   return users.filter(u => productsWithManagers.includes(u.id) )
 }
 

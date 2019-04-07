@@ -1,8 +1,8 @@
 const { User, Product } = require('./models')
 const cnxn = require('./cnxn')
 
-User.hasMany(Product, { foreignKey: 'managerId' })
-Product.belongsTo(User, { as: 'manager', foreignKey: 'managerId' })
+User.hasMany(Product, { foreignKey: 'managerId', constraints: false })
+Product.belongsTo(User, { as: 'manager', foreignKey: 'managerId', constraints: false })
 
 module.exports = () => {
 
@@ -17,7 +17,7 @@ module.exports = () => {
     })
     .then(() => {
       return Promise.all([
-        Product.create({name: 'foo'}),
+        Product.create({name: 'foo', managerId: 1}),
         Product.create({name: 'bar'}),
         Product.create({name: 'bazz'}),
         Product.create({name: 'quq'})

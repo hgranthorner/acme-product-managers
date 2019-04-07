@@ -11,7 +11,7 @@ const ManagerList = ({ managers }) => {
   return (
     <ul>
       {
-        managers.map(m => <li>m.name</li>)
+        managers.map(m => <li key={m.id}>{m.name}</li>)
       }
     </ul>
   )

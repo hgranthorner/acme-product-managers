@@ -11,14 +11,18 @@ const mapDispatchToProps = dispatch => {
 }
 
 const Product = ({ product, users, updateProduct }) => {
-  const [managerId, setManagerId] = useState(product.managerId || 0)
+  const initialManagerId = product.managerId || 0
+  const [managerId, setManagerId] = useState(initialManagerId)
+
+  const hasChanged = () => {
+    return managerId === initialManagerId
+  }
   const handleChange = evt => {
     setManagerId(evt.target.value)
   }
   const handleSubmit = evt => {
     evt.preventDefault()
-    console.log(product.id, managerId)
-    updateProduct(product.id, managerId)
+    updateProduct(product.id, (managerId !== 0 ? managerId : null))
   }
 
   return (
@@ -36,7 +40,7 @@ const Product = ({ product, users, updateProduct }) => {
             ))
           }
         </select>
-        <button type={"submit"}>Save</button>
+        <button type={"submit"} disabled={hasChanged()} className={"btn btn-primary"}>Save</button>
       </form>
     </div>
   )

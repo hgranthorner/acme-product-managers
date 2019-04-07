@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Nav, Home, ProductList } from './components'
+import { Nav, Home, ProductList, ManagerList } from './components'
 import { connect } from 'react-redux'
 import { HashRouter as Router, Route, Switch } from "react-router-dom"
 import { fetchUsers, fetchProducts } from "./store"
@@ -25,7 +25,7 @@ const App = ({ fetchUsers, fetchProducts }) => {
     <Switch>
       <Route path={"/"} exact component={ Home } />
       <Route path={"/products"} exact component={ ProductList } />
-      <Route path={"/users"} exact component={""} />
+      <Route path={"/users"} exact component={ ManagerList } />
     </Switch>
   </Router>
 }
